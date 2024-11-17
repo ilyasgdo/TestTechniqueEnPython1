@@ -194,8 +194,7 @@ def get_pop_commune(data, code):
     >>> get_pop_commune(data, '00000')
     
     """
-    # votre code ici
-# Population totale;Année de recensement
+ 
     for e in data: 
         if  e["Code Officiel Commune / Arrondissement Municipal"] ==code :
             nom = e["Nom Officiel Commune / Arrondissement Municipal"]
@@ -204,15 +203,6 @@ def get_pop_commune(data, code):
             break
 
     t = (nom, pop, anne)
-
-
-
-
-# nom de la commune (str) ;
-
-# population totale de la commune (int), pour l’année de recensement la plus récente ;
-
-# année de recensement la plus récente (str).
     return t
 
 
@@ -223,33 +213,34 @@ def multi_dict(K, type):
         return defaultdict(lambda: multi_dict(K-1, type))
 
 def build_dict_departements(data):
-    """Retourne un dictionnaire dont la clé est le département, et la valeur une liste [nombre de communes, population totale]
-    
-    Args:
-        data (list): la liste de dictionnaires retournée par read_file()
-
-    Returns:
-        dict : un dictionnaire dont la clé est le code du dpt (str) et la valeur un tuple (int, int) nombre de communes, population totale
-    
-    >>> data = read_file(FILENAME)
-    >>> dd = build_dict_departements(data)
-    >>> type(dd)
-    <class 'dict'>
-    >>> len(dd)
-    103
-    >>> dd['18']
-    (290, 310910)
-    >>> dd['21']
-    (713, 553151)
-    >>> dd['27']
-    (614, 627971)
-    >>> dd['53']
-    (264, 346208)
-    """
-    # votre code ici
+    # Initialisation du dictionnaire
     d = dict()
+    
+    # Appel à la fonction pour obtenir la liste des départements
+    listeDep = build_list_departements(data)
+    
+    # Parcours des départements
+    for e in listeDep:
+        nbCommune = 0
+        popTotale = 0
+        
+        # Parcours des données
+        for elt in data:
+            if elt["Code Officiel Département"] == e[0]:
+                nbCommune += 1
+                popTotale += float(elt["Population totale"])
+        
+        # Ajout des résultats dans le dictionnaire
+        d[e[0]] = (nbCommune, popTotale)
 
     return d
+
+
+            
+                
+
+
+    return h
     
     
 def stat_by_dpt(dd, dpt):
@@ -316,7 +307,9 @@ def main():
         print(e)
     p = get_pop_commune(data, '39124')
     print(p)
-    # d = build_dict_departements(data)
+    d = build_dict_departements(data)
+    
+    print(d)
     # s = stat_by_dpt(d, '77')
 
     

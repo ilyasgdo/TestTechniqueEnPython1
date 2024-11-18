@@ -2,9 +2,10 @@
 import csv
 import doctest
 from collections import defaultdict
+import os
 
 # le path du fichier de données
-FILENAME = "pop.csv"
+FILENAME = "population.csv"
 
 
 def read_file(filename):
@@ -58,7 +59,6 @@ def read_file(filename):
     >>> data[125500]["Nom Officiel Département"]
     'Aube'
     """
-    # votre code ici
     l = []
     #with open(filename,encoding='utf-8') as f:
        # file=csv.reader(f,delimiter=';')
@@ -128,7 +128,6 @@ def build_list_departements(data):
     >>> ld[65]
     ('65', 'Hautes-Pyrénées')
     """
-    # votre code ici
     l = []
     departements = set()
     for row in data:
@@ -152,7 +151,6 @@ def build_list_communes(data):
     
     
     """
-    # votre code ici
     l = []
     listeCommunes=set()
     for e in data :
@@ -286,31 +284,93 @@ def stat_by_dpt(dd, dpt):
 
     """
     # votre code ici
-    t = (None, None)
+
+    hello =dd[dpt]
+
+    t = (hello[0], hello[1])
 
     return t
 
 def main():
-    # votre code de test ici
-    # le code ci dessous est exécuté avec la commande :
-    #   python population.py
-   
     
+
+   # region lecture
+    print("")
+    print("")
+    print("//////////////////////////////////////////")
+    print("lecture du fichier: ")
+    print("")
+    print("")
+
     data = read_file(FILENAME)
     for e in data :
         print(e)
+    
+    # region liste dep
+
+    print("")
+    print("")
+    print("//////////////////////////////////////////")
+    print("liste departement ")
+    print("")
+    print("")
+
+    print("liste departement ")
     l = build_list_departements(data)
     for e in l:
         print(e)
+
+    # region liste communes
+
+    print("")
+    print("")
+    print("//////////////////////////////////////////")
+    print("liste des communes ")
+    print("")
+    print("")
+
+    
     c = build_list_communes(data)
     for e in c:
         print(e)
+
+    # region population commune
+
+    print("")
+    print("")
+    print("//////////////////////////////////////////")
+    print("population commune ")
+    print("")
+    print("")
+    
+
     p = get_pop_commune(data, '39124')
     print(p)
+
+    # region dictionnaire departement nb communes nb habitant
+
+    print("")
+    print("")
+    print("//////////////////////////////////////////")
+    print("dictionnaire departement nb communes nb habitant ")
+    print("")
+    print("")
+
     d = build_dict_departements(data)
-    
     print(d)
-    # s = stat_by_dpt(d, '77')
+
+     # region nombre de commmune et nombre habitatn d'un departmemnt
+
+    print("")
+    print("")
+    print("//////////////////////////////////////////")
+    print("nombre de commmune et nombre habitatn d'un departmemnt ")
+    print("")
+    print("")
+
+
+    s = stat_by_dpt(d, '80')
+    print(s)
 
     
 # Ne pas modifier le code ci-dessous
